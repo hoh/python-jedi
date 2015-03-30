@@ -1,0 +1,19 @@
+{
+  "name": "python-jedi",
+  "main": "./lib/jedi-python3-autocomplete",
+  "version": "0.1.0",
+  "description": "Python Jedi based autocompletion plugin ",
+  "repository": "https://github.com/saravanan-k90/python-jedi",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0",
+    "node": "*"
+  },
+  "providedServices": {
+    "autocomplete.provider": {
+      "versions": {
+        "1.1.0": "getProvider"
+      }
+    }
+  }
+}
