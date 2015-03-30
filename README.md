@@ -1,6 +1,6 @@
 # python-jedi package
 
-Python Jedi based autocompletion plugin.
+Jedi based autocompletion plugin for Python.
 
 ## Installation
 Either use Atoms package manager or `apm install python-jedi`. Install autocomplete-plus before installing this package.
