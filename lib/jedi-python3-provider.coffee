@@ -5,10 +5,10 @@ errorStatus = false
 resetJedi= (newValue) ->
   try
     atom.packages.disablePackage('python-jedi')
-    atom.packages.enablePackage('python-jedi')
   catch error
     console.log error
 
+  atom.packages.enablePackage('python-jedi')
 
 module.exports =
 class JediProvider
