@@ -51,7 +51,6 @@ module.exports =
   deactivate: ->
      pid = @jediServer.pid+1
      errorStatus = @provider.kill_Jedi(cp, isWin, pid)
-     console.log errorStatus
      @jediServer = null
 
   getProvider: ->
