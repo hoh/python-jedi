@@ -1,7 +1,7 @@
 {
   "name": "python-jedi",
   "main": "./lib/jedi-python3-autocomplete",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Python Jedi based autocompletion plugin ",
   "repository": "https://github.com/saravanan-k90/python-jedi",
   "license": "MIT",
