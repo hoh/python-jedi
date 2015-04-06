@@ -64,31 +64,38 @@ class JediProvider
         prefix = prefix.replace(/\s/g,'')
 
       tripleQuotes = (/(\'\'\')/g).test(options.prefix)
-      $.ajax
+      line = options.editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
+      hash = line.search(/(\#)/g);
+      
+      if hash < 0 && not tripleQuotes
+        $.ajax
 
-        url: 'http://127.0.0.1:7777'
-        type: 'POST'
-        data: JSON.stringify payload
+          url: 'http://127.0.0.1:7777'
+          type: 'POST'
+          data: JSON.stringify payload
 
-        success: (data) ->
+          success: (data) ->
 
-          # build suggestions
-          if data.length isnt 0 && not tripleQuotes
-            for index of data
+            # build suggestions
+            if data.length isnt 0
+              for index of data
 
-              label = data[index].description
+                label = data[index].description
 
-              if label.length > 80
-                label = label.substr(0, 80)
-              suggestions.push({
-                text: data[index].name,
-                replacementPrefix: prefix,
-                label: label,
+                if label.length > 80
+                  label = label.substr(0, 80)
+                suggestions.push({
+                  text: data[index].name,
+                  replacementPrefix: prefix,
+                  label: label,
 
-              })
+                })
 
-          resolve(suggestions)
-
+            resolve(suggestions)
+      else
+        suggestions =[]
+        resolve(suggestions)
+        
   error: (data) ->
     console.log "Error communicating with server"
     console.log data
