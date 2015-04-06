@@ -1,6 +1,6 @@
 # python-jedi package
 
-Jedi based autocompletion plugin for Python.
+Python Jedi based autocompletion plugin.
 
 ## Installation
 Either use Atoms package manager or `apm install python-jedi`. Install autocomplete-plus before installing this package.
@@ -8,10 +8,11 @@ Either use Atoms package manager or `apm install python-jedi`. Install autocompl
 ### Usage
 
 python-jedi uses python3 interpreter in your path by default.
-For python2 go to settings and enable python2.
-To Use virtualenv/pyvenv - add virtualenv path or pyvenv path in the settings(Pathtopython field).
-(eg:/home/user/py3pyenv/bin/python3 or home/user/py2virtualenv/bin/python)
 
+For python2 go to settings -> check Enable Python2 and uncheck to use Python3.
+
+To Use virtualenv/pyvenv - add virtualenv path or pyvenv path in the settings(Pathtopython field).
+(eg:/home/user/py3pyenv/bin/python3 or /home/user/py2virtualenv/bin/python)
 
 The completion daemon is started on port 7777 - please make sure no
 other service is using this port.
