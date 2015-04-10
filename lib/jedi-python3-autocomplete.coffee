@@ -23,7 +23,7 @@ module.exports =
 
   activate: ->
     if !@jediServer
-      projectPath = atom.project.getPath()
+      projectPath = atom.project.getPaths()
       isPy2 = atom.config.get('python-jedi.enablePython2')
       if isWin
         if isPy2
