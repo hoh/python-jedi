@@ -15,5 +15,8 @@
         "1.1.0": "getProvider"
       }
     }
+  },
+  "dependencies": {
+    "atom-space-pen-views": "^2.0.3"
   }
 }
