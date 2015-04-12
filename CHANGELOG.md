@@ -1,3 +1,6 @@
+## 0.1.9
+* Added new option 'enable pathtopython' to avoid logical confusion.
+
 ## 0.1.8
 * Fixed Deprecated calls & added new dependency. 
 
