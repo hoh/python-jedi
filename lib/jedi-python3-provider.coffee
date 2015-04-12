@@ -101,13 +101,15 @@ class JediProvider
     console.log data
 
 #observe settings
-atom.config.observe 'python-jedi.Pathtopython', (newValue) ->
-  atom.config.set('python-jedi.Pathtopython', newValue)
+atom.config.onDidChange 'python-jedi.Pathtopython', (newValue, oldValue) ->
+  isPathtopython = atom.config.get('python-jedi.enablePathtopython')
+  if isPathtopython
+    atom.config.set('python-jedi.Pathtopython', newValue)
+    resetJedi(newValue)
+
+atom.config.onDidChange 'python-jedi.enablePython2', ({newValue, oldValue}) ->
+#  console.log 'My configuration changed:', newValue, oldValue
   resetJedi(newValue)
 
-atom.config.observe 'python-jedi.enablePython2', (newValue) ->
-  if newValue
-    atom.config.set('python-jedi.Pathtopython', 'python')
-  else
-    atom.config.set('python-jedi.Pathtopython', 'python3')
+atom.config.onDidChange 'python-jedi.enablePathtopython', ({newValue, oldValue}) ->
   resetJedi(newValue)
