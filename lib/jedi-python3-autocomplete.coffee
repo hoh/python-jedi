@@ -9,9 +9,13 @@ module.exports =
   # python-jedi config schema
   config:
     enablePython2:
-      description: 'Enable Python2 (AutoComplete for Python3 will be disabled)'
+      description: 'Check to enable autocomplete for Python2 (AutoComplete for Python3 will be disabled)'
       type: 'boolean'
       default: false
+    enablePathtopython:
+        description: 'Check to enable above Pathtopython field to work'
+        type: 'boolean'
+        default: false
     Pathtopython:
       description:'Python virtual environment path (eg:/home/user/py3pyenv/bin/python3 or home/user/py2virtualenv/bin/python)'
       type: 'string'
@@ -25,22 +29,24 @@ module.exports =
     if !@jediServer
       projectPath = atom.project.getPaths()
       isPy2 = atom.config.get('python-jedi.enablePython2')
-      if isWin
-        if isPy2
-          command = atom.config.get('python-jedi.Pathtopython') + ' ' + __dirname +
-                    '/jedi-python2-complete.py "'  + projectPath + '"'
+      isPathtopython = atom.config.get('python-jedi.enablePathtopython')
+#      if isWin
+      if isPy2
+        if isPathtopython
+          command = atom.config.get('python-jedi.Pathtopython') + " " + __dirname +
+                    "/jedi-python2-complete.py '"  + projectPath + "'"
         else
-          command = atom.config.get('python-jedi.Pathtopython') + ' ' + __dirname +
-                    '/jedi-python3-complete.py "'  + projectPath + '"'
+          command = "python " + __dirname +
+                    "/jedi-python2-complete.py '"  + projectPath + "'"
       else
-        if isPy2
-          command = atom.config.get('python-jedi.Pathtopython') + ' ' + __dirname +
-                    '/jedi-python2-complete.py "'  + projectPath + '"'
+        if isPathtopython
+          command = atom.config.get('python-jedi.Pathtopython') + " " + __dirname +
+                    "/jedi-python3-complete.py '"  + projectPath + "'"
         else
-          command = atom.config.get('python-jedi.Pathtopython') + ' ' + __dirname +
-                    '/jedi-python3-complete.py "'  + projectPath + '"'
+          command = "python3 " + __dirname +
+                    "/jedi-python3-complete.py '"  + projectPath + "'"
 
-    @jediServer = cp.exec command
+      @jediServer = cp.exec command
 
     @provider = new JediProvider()
 
