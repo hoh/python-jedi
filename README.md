@@ -9,19 +9,23 @@ Either use Atoms package manager or `apm install python-jedi`. Install autocompl
 
 python-jedi uses python3 interpreter in your path by default.
 
-For python2 go to settings -> check Enable Python2 and uncheck to use Python3.
+For python2 autocomplete go to settings -> check Enable Python2 and uncheck to use Python3.
 
-To Use virtualenv/pyvenv - add virtualenv path or pyvenv path in the settings(Pathtopython field).
-(eg:/home/user/py3pyenv/bin/python3 or /home/user/py2virtualenv/bin/python)
+#### To Use virtualenv/pyvenv 
+  - Add virtualenv path or pyvenv path in the settings(Pathtopython field).(eg:/home/user/py3pyenv/bin/python3 or /home/user/py2virtualenv/bin/python).
+  
+  - Check 'Enable Pathtopython' option in package settings.
+  
+  - Make sure you are giving the correct virtualenv/pyvenv path. Otherwise autocomplete won't work. Also for python2 virtualenv path to work, you must have checked 'Enable Python2' option.
 
-The completion daemon is started on port 7777 - please make sure no
+### Note
+
+- If you are not using virtualenv path, please uncheck 'Enable Pathtopython'. 
+
+- The completion daemon is started on port 7777 - please make sure no
 other service is using this port.
 
-#### Note
-
-Standard Python2 or Python2 virtualenv will work only if python2 enabled through settings.
-
-The completion daemon is stopped appropriately, which was fully tested in linux
+- The completion daemon is stopped appropriately, which was fully tested in linux
 environment. The package has not been tested under windows environment. It might
 be buggy.
 
