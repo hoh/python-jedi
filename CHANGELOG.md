@@ -1,3 +1,6 @@
+## 0.2.0
+* Fix for issue #4 
+
 ## 0.1.9
 * Added new option 'enable pathtopython' to avoid logical confusion.
 
