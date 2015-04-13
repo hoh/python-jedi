@@ -45,7 +45,7 @@ class JediProvider
 
       bufferPosition = options.cursor.getBufferPosition()
 
-      text = options.buffer.cachedText
+      text = options.editor.getText()
       row = options.cursor.getBufferPosition().row
       column = options.cursor.getBufferPosition().column
 
@@ -63,9 +63,9 @@ class JediProvider
       if prefix is " "
         prefix = prefix.replace(/\s/g,'')
 
-      tripleQuotes = (/(\'\'\')/g).test(options.prefix)
+      tripleQuotes = (/(\'\'\')/g).test(options.cursor.getCurrentWordPrefix())
       line = options.editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
-      hash = line.search(/(\#)/g);
+      hash = line.search(/(\#)/g)
       
       if hash < 0 && not tripleQuotes
         $.ajax
@@ -84,14 +84,14 @@ class JediProvider
 
                 if label.length > 80
                   label = label.substr(0, 80)
-                suggestions.push({
+                suggestions.push
                   text: data[index].name,
                   replacementPrefix: prefix,
-                  label: label,
-
-                })
+                  label: label
 
             resolve(suggestions)
+          error: (jqXHR, textStatus, errorThrown) ->
+            console.log textStatus, errorThrown
       else
         suggestions =[]
         resolve(suggestions)
