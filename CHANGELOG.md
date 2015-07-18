@@ -1,3 +1,6 @@
+## 0.3.1
+* Fix for closing jedi-server in the background properly
+
 ## 0.2.0
 * Fix for issue #4 
 

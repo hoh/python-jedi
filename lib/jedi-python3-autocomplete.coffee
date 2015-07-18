@@ -51,11 +51,11 @@ module.exports =
     @provider = new JediProvider()
 
   serialize: ->
-     pid = @jediServer.pid+1
+     pid = @jediServer.pid
      @provider.kill_Jedi(cp, isWin, pid)
 
   deactivate: ->
-     pid = @jediServer.pid+1
+     pid = @jediServer.pid
      errorStatus = @provider.kill_Jedi(cp, isWin, pid)
      @jediServer = null
 
