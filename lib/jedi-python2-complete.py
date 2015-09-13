@@ -33,8 +33,13 @@ class http_completion(BaseHTTPRequestHandler):
 
         read = json.loads(read)
 
-        payload = completions(read["source"], read["line"], read["column"])
-        payload = json.dumps(payload)
+        if read["type"] == "goto":
+            payload = goto_def(read["source"], read["line"], read["column"], read["path"])
+            payload = json.dumps(payload)
+        else:
+            payload = completions(read["source"], read["line"], read["column"])
+            payload = json.dumps(payload)
+
         self.wfile.write(payload)
 
         return
@@ -78,14 +83,44 @@ def completions(source, line, column):
 
     completions = list()
 
-    for completion in script.completions():
-        completions.append({
-            "name": completion.name,
-            "description": completion.description,
-            "docstring": completion.docstring(),
-        })
+    try:
+        for completion in script.completions():
+            completions.append({
+                "name": completion.name,
+                "description": completion.description,
+                "docstring": completion.docstring(),
+            })
 
-    return completions
+        return completions
+    except:
+        return []
+
+def goto_def(source, line, column, path):
+
+    try:
+        script = jedi.api.Script(source, line, column, path)
+        defs = script.goto_definitions()
+    except:
+        return []
+
+    if defs:
+        is_built = script.goto_definitions()[0].in_builtin_module()
+        module_name = script.goto_definitions()[0].module_name
+
+    defs_string = list()
+    for get in defs:
+        defs_string.append({
+            "type": get.type,
+            "description": get.description,
+            "module_path": get.module_path,
+            "line": get.line,
+            "column":get.column,
+            "is_built_in": is_built,
+            "module_name": module_name
+        })
+        break
+
+    return defs_string
 
 
 if __name__ == "__main__":

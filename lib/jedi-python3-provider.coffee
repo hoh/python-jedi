@@ -37,6 +37,35 @@ class JediProvider
         errorStatus = true
     return errorStatus
 
+  goto_def:(source, row, column, path)->
+
+    payload =
+      source: source
+      line: row
+      column: column
+      path: path
+      type: "goto"
+
+    # console.log payload
+    $.ajax
+
+      url: 'http://127.0.0.1:7777'
+      type: 'POST'
+      data: JSON.stringify payload
+
+      success: (data) ->
+
+        #definitions from goto_def
+        for key,value of data
+          if value['module_path'] != null && value['line'] != null
+            atom.workspace.open(value['module_path'],({'initialLine':(value['line']-1),'searchAllPanes':true}))
+          else if value['is_built_in'] && value['type'] = ("module" || "class" || "function")
+            atom.notifications.addInfo("Built In "+value['type'],
+            ({dismissable: true,'detail':"Description: "+value['description']+
+            ".\nThis is a builtin "+value['type']+". Doesn't have module path"}))
+
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log textStatus, errorThrown
 
   requestHandler: (options) ->
     return new Promise (resolve) ->
@@ -55,6 +84,7 @@ class JediProvider
         source: text
         line: row
         column: column
+        type:'autocomplete'
 
       prefixRegex = /\b((\w+[\w-]*)|([.:;[{(< ]+))$/g
 
@@ -66,7 +96,7 @@ class JediProvider
       tripleQuotes = (/(\'\'\')/g).test(options.cursor.getCurrentWordPrefix())
       line = options.editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
       hash = line.search(/(\#)/g)
-      
+
       if hash < 0 && not tripleQuotes
         $.ajax
 
@@ -95,7 +125,7 @@ class JediProvider
       else
         suggestions =[]
         resolve(suggestions)
-        
+
   error: (data) ->
     console.log "Error communicating with server"
     console.log data
