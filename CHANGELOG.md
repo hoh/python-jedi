@@ -1,3 +1,6 @@
+## 0.3.3
+* Added type property to suggestion.
+
 ## 0.3.2
 * Added goto_definitions functionality (issue #6).
 
