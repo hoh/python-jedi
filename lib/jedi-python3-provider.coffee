@@ -77,6 +77,7 @@ class JediProvider
       text = options.editor.getText()
       row = options.cursor.getBufferPosition().row
       column = options.cursor.getBufferPosition().column
+      path = options.editor.getPath()
 
       resolve(suggestions) unless column isnt 0
 
@@ -84,6 +85,7 @@ class JediProvider
         source: text
         line: row
         column: column
+        path: path
         type:'autocomplete'
 
       prefixRegex = /\b((\w+[\w-]*)|([.:;[{(< ]+))$/g
@@ -111,13 +113,15 @@ class JediProvider
               for index of data
 
                 label = data[index].description
+                type = data[index].type
 
                 if label.length > 80
                   label = label.substr(0, 80)
                 suggestions.push
-                  text: data[index].name,
-                  replacementPrefix: prefix,
+                  text: data[index].name
+                  replacementPrefix: prefix
                   label: label
+                  type: type
 
             resolve(suggestions)
           error: (jqXHR, textStatus, errorThrown) ->

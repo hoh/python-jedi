@@ -40,7 +40,7 @@ class http_completion(BaseHTTPRequestHandler):
             payload = json.dumps(payload)
 
         else:
-            payload = completions(read["source"], read["line"], read["column"])
+            payload = completions(read["source"], read["line"], read["column"], read["path"])
             payload = json.dumps(payload)
 
         self.wfile.write(bytes(payload,'utf-8'))
@@ -65,7 +65,7 @@ def run_server():
             time.sleep(1)
 
 
-def completions(source, line, column):
+def completions(source, line, column, path):
     """
     generate list with completions for the line and column.
 
@@ -81,6 +81,7 @@ def completions(source, line, column):
         source = source,
         line = line + 1,
         column = column,
+        path = path
     )
 
     completions = list()
@@ -90,7 +91,7 @@ def completions(source, line, column):
             completions.append({
                 "name": completion.name,
                 "description": completion.description,
-                "docstring": completion.docstring(),
+                "type":completion.type
             })
 
         return completions
