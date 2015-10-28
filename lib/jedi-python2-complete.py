@@ -47,7 +47,7 @@ class http_completion(BaseHTTPRequestHandler):
 
 def run_server():
     """run the httpd"""
-    address = ('', 7777)
+    address = ('127.0.0.1', 7777)
 
     while True:
         try:
